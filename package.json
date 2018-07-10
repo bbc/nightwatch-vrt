@@ -1,5 +1,5 @@
 {
-    "name": "nightwatch-vrt",
+    "name": "@bbc/nightwatch-vrt",
     "version": "1.0.0",
     "description": "Nightwatch Visual Regression Testing tools",
     "license": "MIT",
