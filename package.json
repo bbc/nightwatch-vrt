@@ -1,6 +1,6 @@
 {
     "name": "nightwatch-vrt",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Nightwatch Visual Regression Testing tools",
     "license": "MIT",
     "homepage": "https://github.com/bbc/nightwatch-vrt",
