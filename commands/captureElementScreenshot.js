@@ -49,11 +49,11 @@ CaptureElementScreenshot.prototype.command = function command(
         });
 
         if (width === 0 || height === 0) {
-            this.client.assertion(
+            api.assert.fail(
                 false,
                 null,
                 null,
-                `The element identified by the selector <${selector}> is not visible or its dimensions equals 0. width: ${width}, height: ${height}`, // eslint-disable-line max-len
+                `The element identified by the selector <${selector.selector}> is not visible or its dimensions equals 0. width: ${width}, height: ${height}`, // eslint-disable-line max-len
                 true
             )
         }
@@ -76,23 +76,20 @@ CaptureElementScreenshot.prototype.command = function command(
             }
 
             screenshot.crop(x, y, width, height)
-            this.client.assertion(
+            api.assert.ok(
                 true,
-                null,
-                null,
-                `The screenshot for selector <${selector}> was captured successfully.`,
-                true
+                `The screenshot for selector <${selector.selector}> was captured successfully.`
             )
 
             callback(screenshot)
             this.emit('complete', screenshot)
         })
     }).catch((errorMessage) => {
-        this.client.assertion(
+        api.assert.fail(
             false,
             'success',
             errorMessage,
-            `The screenshot for selector <${selector}> could not be captured.`
+            `The screenshot for selector <${selector.selector}> could not be captured.`
         )
         this.emit('complete', errorMessage, this)
     })
