@@ -51,7 +51,7 @@ CaptureElementScreenshot.prototype.command = function command(
 
         if (width === 0 || height === 0) {
             assert.fail(
-                `The element identified by the selector <${selector.selector}> is not visible or its dimensions equals 0. width: ${width}, height: ${height}`, // eslint-disable-line max-len
+                `The element identified by the selector <${selector.selector}> is not visible or its dimensions equals 0. width: ${width}, height: ${height}` // eslint-disable-line max-len
             )
         }
 
