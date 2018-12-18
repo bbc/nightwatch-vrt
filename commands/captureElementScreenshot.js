@@ -3,7 +3,6 @@
 const EventEmitter = require('events').EventEmitter,
     util = require('util'),
     Jimp = require('jimp'),
-    assert = require('assert'),
     Buffer = require('buffer').Buffer,
     promisifyCommand = require('../lib/promisify-command')
 
