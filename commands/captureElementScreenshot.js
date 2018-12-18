@@ -50,9 +50,7 @@ CaptureElementScreenshot.prototype.command = function command(
         });
 
         if (width === 0 || height === 0) {
-            assert.fail(
-                `The element identified by the selector <${selector.selector}> is not visible or its dimensions equals 0. width: ${width}, height: ${height}` // eslint-disable-line max-len
-            )
+            this.api.assert.fail(`The element identified by the selector <${selector}> is not visible or its dimensions equals 0. width: ${width}, height: ${height}`)
         }
 
         Jimp.read(new Buffer(screenshotEncoded, 'base64')).then((screenshot) => {
@@ -73,19 +71,14 @@ CaptureElementScreenshot.prototype.command = function command(
             }
 
             screenshot.crop(x, y, width, height)
-            assert.ok(
-                true,
-                `The screenshot for selector <${selector.selector}> was captured successfully.`
-            )
+            this.api.assert.ok(true, `The screenshot for selector <${selector}> was captured successfully.`);
 
             callback(screenshot)
             this.emit('complete', screenshot)
         })
     }).catch((errorMessage) => {
         console.log(errorMessage);
-        assert.fail(
-            `The screenshot for selector <${selector.selector}> could not be captured.`
-        )
+        this.api.assert.fail(`The screenshot for selector <${selector}> could not be captured.`);
         this.emit('complete', errorMessage, this)
     })
 }
