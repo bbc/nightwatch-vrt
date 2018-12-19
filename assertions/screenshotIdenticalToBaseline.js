@@ -28,7 +28,7 @@ exports.assertion = function screenshotIdenticalToBaseline(
     message
 ) {
 
-    this.message = message || `Visual regression test results for element <${elementId}>.`
+    this.message = message || `Visual regression test results for element <${elementId.selector}>.`
     this.expected = true
 
     this.pass = function pass(value) {
@@ -53,7 +53,7 @@ exports.assertion = function screenshotIdenticalToBaseline(
                 compareWithBaseline(this.api, screenshot, fileName, settings).then((result) => {
                     comparisonResult = result ? result : result.value
                     if(result.value === true && result.diff !== result.threshold) {
-                        this.message = `The difference between the screenshots for <${elementId}> was ${result.diff} when ${result.threshold} was expected`
+                        this.message = `The difference between the screenshots for <${elementId.selector}> was ${result.diff} when ${result.threshold} was expected`
                     }
                     done()
                 })

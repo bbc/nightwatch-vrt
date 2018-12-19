@@ -1,6 +1,3 @@
-[![Build Status](https://travis-ci.org/Crunch-io/nightwatch-vrt.svg?branch=master)](https://travis-ci.org/Crunch-io/nightwatch-vrt)
-[![NPM Version](http://img.shields.io/npm/v/nightwatch-vrt.svg?maxAge=86400)](https://www.npmjs.org/package/nightwatch-vrt)
-
 # Nightwatch VRT
 
 Nightwatch Visual Regression Testing tools for `nightwatch.js`
@@ -19,10 +16,10 @@ Register `nightwatch-vrt`'s assertion and commands:
 
 ```JavaScript
     custom_commands_path: [
-        'node_modules/nightwatch-vrt/commands'
+        'node_modules/@bbc/nightwatch-vrt/commands'
     ],
     custom_assertions_path: [
-        'node_modules/nightwatch-vrt/assertions'
+        'node_modules/@bbc/nightwatch-vrt/assertions'
     ]
 ```
 
