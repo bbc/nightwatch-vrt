@@ -56,7 +56,10 @@ exports.assertion = function screenshotIdenticalToBaseline(
                         this.message = `The difference between the screenshots for <${elementId.selector}> was ${result.diff} when ${result.threshold} was expected`
                     }
                     done()
-                })
+                }, (reject) => {
+                    comparisonResult = reject
+                    done()
+                });
             })
             .perform((done) => {
                 callback(comparisonResult)
