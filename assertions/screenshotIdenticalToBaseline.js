@@ -22,7 +22,7 @@ const compareWithBaseline = require('../lib/compare-with-baseline')
  * @param {String} message Optional message for `nightwatch` to log upon completion
  */
 exports.assertion = function screenshotIdenticalToBaseline(
-    elementId = elementId || 'body',
+    elementId,
     fileName = elementId,
     settings,
     message
