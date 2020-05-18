@@ -16,19 +16,25 @@ const compareWithBaseline = require('../lib/compare-with-baseline')
  * that order. Further assertions will compare against the screenshot that was
  * saved in the first execution of the assertion.
  *
- * @param {String} selector Identifies the element that will be captured in the screenshot.
- * @param {String} fileName Optional file name for this screenshot; defaults to the selector
+ * @param elementId Identifies the element that will be captured in the screenshot. Could be string or page object.
+ * @param {String} fileName Optional file name for this screenshot; defaults to the elementId
  * @param {NightwatchVRTOptions} settings Optional settings to override the defaults and `visual_regression_settings`
  * @param {String} message Optional message for `nightwatch` to log upon completion
  */
 exports.assertion = function screenshotIdenticalToBaseline(
-    elementId = 'body',
+    elementId,
     fileName = elementId,
     settings,
     message
 ) {
-
-    this.message = message || `Visual regression test results for element <${elementId.selector}>.`
+    if (elementId === 'body') {
+        elementId = 'body';
+    } else if (elementId.selector) {
+        elementId = elementId.selector
+    } else {
+        elementId = elementId;
+    }
+    this.message = message || `Visual regression test results for element <${elementId}>.`
     this.expected = true
 
     this.pass = function pass(value) {
@@ -53,7 +59,14 @@ exports.assertion = function screenshotIdenticalToBaseline(
                 compareWithBaseline(this.api, screenshot, fileName, settings).then((result) => {
                     comparisonResult = result ? result : result.value
                     if(result.value === true && result.diff !== result.threshold) {
-                        this.message = `The difference between the screenshots for <${elementId.selector}> was ${result.diff} when ${result.threshold} was expected`
+                        if (elementId === 'body') {
+                            elementId = 'body';
+                        } else if (elementId.selector) {
+                            elementId = elementId.selector
+                        } else {
+                            elementId = elementId;
+                        }
+                        this.message = `The difference between the screenshots for <${elementId}> was ${result.diff} when ${result.threshold} was expected`
                     }
                     done()
                 }, (reject) => {
