@@ -27,7 +27,9 @@ exports.assertion = function screenshotIdenticalToBaseline(
     settings,
     message
 ) {
-    if (elementId.selector) {
+    if (elementId === 'body') {
+        elementId = 'body';
+    } else if (elementId.selector) {
         elementId = elementId.selector
     } else {
         elementId = elementId;
@@ -57,7 +59,9 @@ exports.assertion = function screenshotIdenticalToBaseline(
                 compareWithBaseline(this.api, screenshot, fileName, settings).then((result) => {
                     comparisonResult = result ? result : result.value
                     if(result.value === true && result.diff !== result.threshold) {
-                        if (elementId.selector) {
+                        if (elementId === 'body') {
+                            elementId = 'body';
+                        } else if (elementId.selector) {
                             elementId = elementId.selector
                         } else {
                             elementId = elementId;
