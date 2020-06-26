@@ -58,15 +58,17 @@ exports.assertion = function screenshotIdenticalToBaseline(
             .perform((done) => {
                 compareWithBaseline(this.api, screenshot, fileName, settings).then((result) => {
                     comparisonResult = result ? result : result.value
+                    if (elementId === 'body') {
+                        elementId = 'body';
+                    } else if (elementId.selector) {
+                        elementId = elementId.selector
+                    } else {
+                        elementId = elementId;
+                    }
                     if(result.value === true && result.diff !== result.threshold) {
-                        if (elementId === 'body') {
-                            elementId = 'body';
-                        } else if (elementId.selector) {
-                            elementId = elementId.selector
-                        } else {
-                            elementId = elementId;
-                        }
                         this.message = `The difference between the screenshots for <${elementId}> was ${result.diff} when ${result.threshold} was expected`
+                    } else if(result.value === true && result.diff === result.threshold) {
+                        this.message = `The difference between the screenshot and baseline for <${elementId}> is less than 0.01. (Threshold: ${result.threshold} and Diff: ${result.fulldiff}) >`
                     }
                     done()
                 }, (reject) => {
