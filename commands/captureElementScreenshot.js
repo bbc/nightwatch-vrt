@@ -31,25 +31,26 @@ CaptureElementScreenshot.prototype.command = function command(
         promisifyCommand(api, 'getLocationInView', [selector]),
         promisifyCommand(api, 'getElementSize', [selector]),
         promisifyCommand(api, 'screenshot', [false])
-    ]).then(([location, size, screenshotEncoded]) => {
-        let { x, y } = location
-        let { width, height } = size
+    ]).then(async ([location, size, screenshotEncoded]) => {
 
         /*
          * Here we get the pixel density of the window and 
          * ensure that we adjust the width and height accordingly
          */
-        api.execute(function () {
-            return window.devicePixelRatio
-        }, [], function (devicePixelRatio) {
-            x *= devicePixelRatio.value
-            y *= devicePixelRatio.value
-            width *= devicePixelRatio.value
-            height *= devicePixelRatio.value
-        });
+        await new Promise((resolve) => {
+            api.execute(function () {
+                return window.devicePixelRatio
+            }, [], function (devicePixelRatio) {
+                location.x *= devicePixelRatio.value
+                location.y *= devicePixelRatio.value
+                size.width *= devicePixelRatio.value
+                size.height *= devicePixelRatio.value
+                resolve()
+            })
+        })
 
-        if (width === 0 || height === 0) {
-            this.api.assert.fail(`The element identified by the selector <${selector}> is not visible or its dimensions equals 0. width: ${width}, height: ${height}`)
+        if (size.width === 0 || size.height === 0) {
+            this.api.assert.fail(`The element identified by the selector <${selector}> is not visible or its dimensions equals 0. width: ${size.width}, height: ${size.height}`)
         }
 
         Jimp.read(new Buffer(screenshotEncoded, 'base64')).then((screenshot) => {
@@ -61,15 +62,15 @@ CaptureElementScreenshot.prototype.command = function command(
              * dimentions will exceed the actual dimensions, resulting in a
              * "RangeError: out of range index" exception (from Buffer)
              */
-            if ((y + height) > screenshot.bitmap.height) {
-                height = (screenshot.bitmap.height - y)
+            if ((location.y + size.height) > screenshot.bitmap.height) {
+                size.height = (screenshot.bitmap.height - location.y)
             }
 
-            if ((x + width) > screenshot.bitmap.width) {
-                width = (screenshot.bitmap.width - x)
+            if ((location.x + size.width) > screenshot.bitmap.width) {
+                size.width = (screenshot.bitmap.width - location.x)
             }
 
-            screenshot.crop(x, y, width, height)
+            screenshot.crop(location.x, location.y, size.width, size.height)
             this.api.assert.ok(true, `The screenshot for selector <${selector}> was captured successfully.`);
 
             callback(screenshot)
