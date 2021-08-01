@@ -37,7 +37,7 @@
         "lodash": "^4.17.4"
     },
     "devDependencies": {
-        "eslint": "^7.29.0",
+        "eslint": "^7.32.0",
         "eslint-config-crunch": "^1.8.0",
         "eslint-plugin-react": "^7.24.0",
         "http-server": "^0.12.0",
