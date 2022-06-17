@@ -34,7 +34,7 @@ exports.assertion = function screenshotIdenticalToBaseline(
     } else {
         elementId = elementId;
     }
-    this.message = message || `Visual regression test results for element <${elementId}>.`
+    this.message = message || `No differences found between baseline and screenshot of element <${elementId}>.`
     this.expected = true
 
     this.pass = function pass(value) {
@@ -65,9 +65,9 @@ exports.assertion = function screenshotIdenticalToBaseline(
                     } else {
                         elementId = elementId;
                     }
-                    if(result.value === true && result.diff !== result.threshold) {
+                    if(result.value === false && result.diff !== result.threshold) {
                         this.message = `The difference between the screenshots for <${elementId}> was ${result.diff} when ${result.threshold} was expected`
-                    } else if(result.value === true && result.diff === result.threshold) {
+                    } else if(result.value === false && result.diff === result.threshold) {
                         this.message = `The difference between the screenshot and baseline for <${elementId}> is less than 0.01. (Threshold: ${result.threshold} and Diff: ${result.fulldiff}) >`
                     }
                     done()
