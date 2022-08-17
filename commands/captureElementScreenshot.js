@@ -28,7 +28,7 @@ CaptureElementScreenshot.prototype.command = function command(
     const api = this.client.api
 
     Promise.all([
-        promisifyCommand(api, 'getElementScreenshot', [selector])
+        promisifyCommand(api, 'takeElementScreenshot', [selector])
     ]).then(async ([screenshotEncoded]) => {
 
         Jimp.read(new Buffer(screenshotEncoded, 'base64')).then((screenshot) => {
