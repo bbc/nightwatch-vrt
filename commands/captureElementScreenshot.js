@@ -28,49 +28,10 @@ CaptureElementScreenshot.prototype.command = function command(
     const api = this.client.api
 
     Promise.all([
-        promisifyCommand(api, 'getLocationInView', [selector]),
-        promisifyCommand(api, 'getElementSize', [selector]),
-        promisifyCommand(api, 'screenshot', [false])
-    ]).then(async ([location, size, screenshotEncoded]) => {
-
-        /*
-         * Here we get the pixel density of the window and 
-         * ensure that we adjust the width and height accordingly
-         */
-        await new Promise((resolve) => {
-            api.execute(function () {
-                return window.devicePixelRatio
-            }, [], function (devicePixelRatio) {
-                location.x *= devicePixelRatio.value
-                location.y *= devicePixelRatio.value
-                size.width *= devicePixelRatio.value
-                size.height *= devicePixelRatio.value
-                resolve()
-            })
-        })
-
-        if (size.width === 0 || size.height === 0) {
-            this.api.assert.fail(`The element identified by the selector <${selector}> is not visible or its dimensions equals 0. width: ${size.width}, height: ${size.height}`)
-        }
+        promisifyCommand(api, 'getElementScreenshot', [selector])
+    ]).then(async ([screenshotEncoded]) => {
 
         Jimp.read(new Buffer(screenshotEncoded, 'base64')).then((screenshot) => {
-            /**
-             * https://www.w3.org/TR/webdriver/#take-screenshot
-             * "The Take Screenshot command takes a screenshot of the top-level browsing context’s viewport."
-             *
-             * If the target element extends outside of the viewport, the expected
-             * dimentions will exceed the actual dimensions, resulting in a
-             * "RangeError: out of range index" exception (from Buffer)
-             */
-            if ((location.y + size.height) > screenshot.bitmap.height) {
-                size.height = (screenshot.bitmap.height - location.y)
-            }
-
-            if ((location.x + size.width) > screenshot.bitmap.width) {
-                size.width = (screenshot.bitmap.width - location.x)
-            }
-
-            screenshot.crop(location.x, location.y, size.width, size.height)
             this.api.assert.ok(true, `The screenshot for selector <${selector}> was captured successfully.`);
 
             callback(screenshot)

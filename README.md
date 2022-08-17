@@ -96,10 +96,10 @@ In order to use `nightwatch-vrt`, you only need to invoke the `screenshotIdentic
 
 ```JavaScript
 module.exports = {
-    'Test crunch.io main content is correct': (browser) => {
+    'Test Google UI loads correctly': (browser) => {
         browser
-            .url('https://crunch.io')
-            .assert.screenshotIdenticalToBaseline('.body.entry-content',  /* Optional */ 'custom-name', {threshold: 0.5}, 'VRT custom-name complete.')
+            .url('https://www.google.co.uk')
+            .assert.screenshotIdenticalToBaseline('body',  /* Optional */ 'custom-name', {threshold: 0.5}, 'VRT custom-name complete.')
             .end()
     }
 }
