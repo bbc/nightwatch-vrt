@@ -4,7 +4,7 @@ const EventEmitter = require('events').EventEmitter,
     util = require('util'),
     Jimp = require('jimp'),
     Buffer = require('buffer').Buffer,
-    promisifyCommand = require('../lib/promisify-command')
+    promisifyCommand = require('../../lib/promisify-command')
 
 /**
  * Takes a screenshot of the visible region encompassed by the bounding rectangle

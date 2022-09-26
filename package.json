@@ -21,8 +21,7 @@
     "jest": {
         "roots": [
             "lib",
-            "assertions",
-            "commands",
+            "nightwatch",
             "tests"
         ],
         "testRegex": "-test\\.js$",
