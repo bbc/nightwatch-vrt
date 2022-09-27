@@ -10,7 +10,7 @@
     },
     "types": "index",
     "scripts": {
-        "lint": "eslint lib assertions commands",
+        "lint": "eslint lib nightwatch",
         "test:dev": "jest --watch --notify",
         "test": "jest --coverage",
         "clean": "rimraf node_modules package-lock.json reports",

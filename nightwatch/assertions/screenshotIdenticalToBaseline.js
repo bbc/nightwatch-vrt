@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-const compareWithBaseline = require('../../lib/compare-with-baseline')
+const compareWithBaseline = require('../../lib/compare-with-baseline');
 
 /**
  * Asserts if a screenshot that captures the visual representation of
@@ -22,65 +22,62 @@ const compareWithBaseline = require('../../lib/compare-with-baseline')
  * @param {String} message Optional message for `nightwatch` to log upon completion
  */
 exports.assertion = function screenshotIdenticalToBaseline(
-    elementId,
-    fileName = elementId,
-    settings,
-    message
+  elementId,
+  fileName = elementId,
+  settings,
+  message
 ) {
-    if (elementId === 'body') {
-        elementId = 'body';
-    } else if (elementId.selector) {
-        elementId = elementId.selector
-    } else {
-        elementId = elementId;
-    }
-    this.message = message || `Visual regression test results for element <${elementId}>.`
-    this.expected = true
+  if (elementId === 'body') {
+    elementId = 'body';
+  } else if (elementId.selector) {
+    elementId = elementId.selector;
+  } 
+  this.message = message || `Visual regression test results for element <${elementId}>.`;
+  this.expected = true;
 
-    this.pass = function pass(value) {
-        return value === this.expected
-    }
+  this.pass = function pass(value) {
+    return value === this.expected;
+  };
 
-    this.value = function value(result) {
-        return result
-    }
+  this.value = function value(result) {
+    return result;
+  };
 
-    this.command = function command(callback) {
-        let screenshot,
-            comparisonResult
+  this.command = function command(callback) {
+    let screenshot;
+    let comparisonResult;
 
-        this
-            .api
-            .waitForElementVisible(elementId, 5000)
-            .captureElementScreenshot(elementId, (elementScreenshot) => {
-                screenshot = elementScreenshot
-            })
-            .perform((done) => {
-                compareWithBaseline(this.api, screenshot, fileName, settings).then((result) => {
-                    comparisonResult = result ? result : result.value
-                    if (elementId === 'body') {
-                        elementId = 'body';
-                    } else if (elementId.selector) {
-                        elementId = elementId.selector
-                    } else {
-                        elementId = elementId;
-                    }
-                    if(result.value === true && result.diff !== result.threshold) {
-                        this.message = `The difference between the screenshots for <${elementId}> was ${result.diff} when ${result.threshold} was expected`
-                    } else if(result.value === true && result.diff === result.threshold) {
-                        this.message = `The difference between the screenshot and baseline for <${elementId}> is less than 0.01. (Threshold: ${result.threshold} and Diff: ${result.fulldiff}) >`
-                    }
-                    done()
-                }, (reject) => {
-                    comparisonResult = reject
-                    done()
-                });
-            })
-            .perform((done) => {
-                callback(comparisonResult)
-                done()
-            })
+    this
+      .api
+      .waitForElementVisible(elementId, 5000)
+      .captureElementScreenshot(elementId, (elementScreenshot) => {
+        screenshot = elementScreenshot;
+      })
+      .perform((done) => {
+        compareWithBaseline(this.api, screenshot, fileName, settings).then((result) => {
+          comparisonResult = result ? result : result.value;
+          if (elementId === 'body') {
+            elementId = 'body';
+          } else if (elementId.selector) {
+            elementId = elementId.selector;
+          } 
 
-        return this
-    }
-}
+          if (result.value === true && result.diff !== result.threshold) {
+            this.message = `The difference between the screenshots for <${elementId}> was ${result.diff} when ${result.threshold} was expected`;
+          } else if (result.value === true && result.diff === result.threshold) {
+            this.message = `The difference between the screenshot and baseline for <${elementId}> is less than 0.01. (Threshold: ${result.threshold} and Diff: ${result.fulldiff}) >`;
+          }
+          done();
+        }, (reject) => {
+          comparisonResult = reject;
+          done();
+        });
+      })
+      .perform((done) => {
+        callback(comparisonResult);
+        done();
+      });
+
+    return this;
+  };
+};
