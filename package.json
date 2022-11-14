@@ -1,5 +1,5 @@
 {
-    "name": "@nightwatchjs/vrt",
+    "name": "@nightwatch/vrt",
     "version": "0.0.1",
     "description": "Nightwatch Visual Regression Testing tools",
     "license": "MIT",
