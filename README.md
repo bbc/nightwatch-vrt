@@ -1,7 +1,6 @@
 # @nightwatch/vrt
 
 [![Build Status][build-badge]][build]
-[![version][version-badge]][package]
 [![Discord][discord-badge]][discord]
 
 Official Nightwatch Plugin which adds visual regression testing support.
@@ -124,3 +123,13 @@ The first time a test is run, a baseline screenshot will be created and stored o
 
 Baseline screenshots can be updated by running test with a CLI flag `--update-screenshots` or using global setting 'updateScreenshots' 
 
+
+
+[build-badge]: https://github.com/nightwatchjs/nightwatch-vrt/actions/workflows/node.js.yml/badge.svg?branch=master
+[build]: https://github.com/nightwatchjs/nightwatch-vrt/actions/workflows/node.js.yml
+[version-badge]: https://img.shields.io/npm/v/@nightwatch/vrt.svg?style=flat-square
+[package]: https://www.npmjs.com/package/@nightwatch/vrt
+[license-badge]: https://img.shields.io/npm/l/@nightwatch/vrt.svg?style=flat-square
+[license]: https://github.com/nightwatchjs/nightwatch-vrt/blob/main/LICENSE
+[discord-badge]: https://img.shields.io/discord/618399631038218240.svg?color=7389D8&labelColor=6A7EC2&logo=discord&logoColor=ffffff&style=flat-square
+[discord]: https://discord.gg/SN8Da2X
