@@ -48,7 +48,7 @@ module.exports: {
     'diff_suffix': '',
     'threshold': 0.01,
     'prompt': true,
-    'always_save_diff_screenshot': true
+    'updateScreenshots': false
   },
 }
 
