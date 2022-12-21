@@ -1,49 +1,58 @@
-# Nightwatch VRT
+# @nightwatch/vrt
 
-Nightwatch Visual Regression Testing tools for `nightwatch.js`
+[![Build Status][build-badge]][build]
+[![version][version-badge]][package]
+[![Discord][discord-badge]][discord]
+
+Official Nightwatch Plugin which adds visual regression testing support.
+
+
+
+```
+npm install @nightwatch/vrt
+```
 
 ## Description
 
 Nightwatch VRT extends [nightwatch.js](http://nightwatchjs.org/) with an assertion that captures a screenshot of a DOM element identified by a selector and compares the screenshot against a baseline screenshot. If the baseline screenshot does not exist, it will be created the first time you run the test and the assertion will pass.
 
-## Configuration
+## Usage
+Update your [Nightwatch configuration](https://nightwatchjs.org/guide/configuration/overview.html) and add the plugin to the list:
 
-Include the following sections in the `nightwatch` [configuration file](http://nightwatchjs.org/gettingstarted#settings-file)
-
-#### Custom commands and assertions
-
-Register `nightwatch-vrt`'s assertion and commands:
-
-```JavaScript
-    custom_commands_path: [
-        'node_modules/@bbc/nightwatch-vrt/commands'
-    ],
-    custom_assertions_path: [
-        'node_modules/@bbc/nightwatch-vrt/assertions'
-    ]
+```js
+module.exports = {
+    plugins: ['@nightwatch/vrt']
+    
+    // other nightwath settings...
+}
 ```
+
+
 
 #### Nightwatch VRT custom settings
 
-Then, for global settings, add the `visual_regression_settings` entry to nightwatch's `globals` [`globals`](http://nightwatchjs.org/gettingstarted#test-settings) section
+The `@nightwatch/vrt` plugin comes by default with sensible configuration, but in some scenarios you may need to change some of the config options.
 
-```JSON
-default: {
-    "globals": {
-        "visual_regression_settings": {
-            "generate_screenshot_path": defaultScreenshotPathGenerator,
-            "latest_screenshots_path": "vrt/latest",
-            "latest_suffix": "",
-            "baseline_screenshots_path": "vrt/baseline",
-            "baseline_suffix": "",
-            "diff_screenshots_path": "vrt/diff",
-            "diff_suffix": "",
-            "threshold": 0,
-            "prompt": false,
-            "always_save_diff_screenshot": false
-        }
-    }
+You can change the settings using Nightwatch globals, add the `@nightwatch/vrt` entry to Nightwatch config
+
+```js
+//nightwatch.conf.js
+
+module.exports: {
+   '@nightwatch/vrt': {
+    'generate_screenshot_path': this.generateScreenshotFilePath,
+    'latest_screenshots_path': 'vrt/latest',
+    'latest_suffix': '',
+    'baseline_screenshots_path': 'vrt/baseline',
+    'baseline_suffix': '',
+    'diff_screenshots_path': 'vrt/diff',
+    'diff_suffix': '',
+    'threshold': 0.01,
+    'prompt': true,
+    'always_save_diff_screenshot': true
+  },
 }
+
 ```
 
 | Property                    | Description                                                                                                      | Defaults       |
@@ -57,7 +66,7 @@ default: {
 | diff_suffix                 | A string appended to the end of the diff image*                                                                  | ""             |
 | threshold                   | Matching threshold, ranges from `0` to `1`. Smaller values make the comparison more sensitive.                   | 0.0            |
 | prompt                      | If true, the user will be prompted to override baseline screenshot when the recently captured screenshot differs | false          |
-| always_save_diff_screenshot | If true, recently captured screenshots will always override the baseline                                         | false          |
+| updateScreenshots | If true, recently captured screenshots will always override the baseline                                         | false          |
 \* *Only necessary if screenshots are set to reside in the same directory*
 
 #### Nightwatch VRT screenshot path generator
@@ -82,9 +91,11 @@ function generateScreenshotFilePath(nightwatchClient, basePath, fileName) {
 }
 ```
 
-## Usage
+## API Commands
 
 In order to use `nightwatch-vrt`, you only need to invoke the `screenshotIdenticalToBaseline` assertion and pass a css selector for the DOM element to compare. You may also pass a custom filename, `visual_regression_settings` overrides, and a custom log message.
+
+### - assert.screenshotIdenticalToBaseline
 
 | Parameter        | Description                                                                                    |
 |------------------|------------------------------------------------------------------------------------------------|
@@ -95,14 +106,21 @@ In order to use `nightwatch-vrt`, you only need to invoke the `screenshotIdentic
 
 
 ```JavaScript
-module.exports = {
-    'Test Google UI loads correctly': (browser) => {
+describe('VRT demo test', function() {
+    it('Test Google UI loads correctly', function(browser) {
         browser
             .url('https://www.google.co.uk')
             .assert.screenshotIdenticalToBaseline('body',  /* Optional */ 'custom-name', {threshold: 0.5}, 'VRT custom-name complete.')
             .end()
-    }
-}
+    })
+})
 ```
 
 The first time a test is run, a baseline screenshot will be created and stored on disk. You should always register the baseline screenshot in the code repository. Further executions of this test will compare against this baseline.
+
+### Updating baseline screenshots
+
+The first time a test is run, a baseline screenshot will be created and stored on disk. You should always register the baseline screenshot in the code repository. Further executions of this test will compare against this baseline. 
+
+Baseline screenshots can be updated by running test with a CLI flag `--update-screenshots` or using global setting 'updateScreenshots' 
+

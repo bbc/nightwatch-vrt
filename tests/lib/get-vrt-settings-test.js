@@ -10,7 +10,7 @@ const getVrtSettings = require('../../lib/get-vrt-settings'),
         diff_suffix: '',
         threshold: 0.0,
         prompt: false,
-        always_save_diff_screenshot: false
+        updateScreenshots: false
     }
 
 describe('getVrtSettings', () => {

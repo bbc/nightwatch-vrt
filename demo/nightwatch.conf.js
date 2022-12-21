@@ -68,7 +68,7 @@ module.exports = {
         'diff_suffix': '.diff',
         'threshold': 0.01,
         'prompt': true,
-        'always_save_diff_screenshot': false
+        'updateScreenshots': false
       },
       'screenshots': {
         'enabled': true,
