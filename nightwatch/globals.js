@@ -2,7 +2,7 @@ const reporter = require('../lib/reporter');
 module.exports = {
 
   afterEach(browser) {
-    reporter.insertDataIntoReporter();
+    reporter.appendDataToTestResult();
   },
 
   reporter(results, done) {
