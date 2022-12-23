@@ -1,13 +1,12 @@
 const reporter = require('../lib/reporter');
 module.exports = {
 
-  afterEach(browser) {
+  afterEach() {
     reporter.appendDataToTestResult();
   },
 
   reporter(results, done) {
-    reporter.publishReport(results);
-    done();
+    reporter.publishReport(results, done);
   }
 
 };
