@@ -32,14 +32,16 @@ module.exports = {
 
 The `@nightwatch/vrt` plugin comes by default with sensible configuration, but in some scenarios you may need to change some of the config options.
 
-You can change the settings using Nightwatch globals, add the `@nightwatch/vrt` entry to Nightwatch config
+You can change the settings by adding `@nightwatch/vrt` entry to Nightwatch config
 
 ```js
 //nightwatch.conf.js
 
 module.exports: {
+    
+    //... other config
+
    '@nightwatch/vrt': {
-    'generate_screenshot_path': this.generateScreenshotFilePath,
     'latest_screenshots_path': 'vrt/latest',
     'latest_suffix': '',
     'baseline_screenshots_path': 'vrt/baseline',
@@ -47,7 +49,7 @@ module.exports: {
     'diff_screenshots_path': 'vrt/diff',
     'diff_suffix': '',
     'threshold': 0.01,
-    'prompt': true,
+    'prompt': false,
     'updateScreenshots': false
   },
 }
