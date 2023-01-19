@@ -3,32 +3,34 @@
 [![Build Status][build-badge]][build]
 [![Discord][discord-badge]][discord]
 
-Official Nightwatch Plugin which adds visual regression testing support.
+Official Nightwatch plugin that adds visual regression testing support.
 
+## Installation
 
+### Step 1 – install from NPM
 
 ```
-npm install @nightwatch/vrt
+npm i @nightwatch/vrt
 ```
 
-## Description
+### Step 2 – add the plugin to the list
 
-Nightwatch VRT extends [nightwatch.js](http://nightwatchjs.org/) with an assertion that captures a screenshot of a DOM element identified by a selector and compares the screenshot against a baseline screenshot. If the baseline screenshot does not exist, it will be created the first time you run the test and the assertion will pass.
-
-## Usage
 Update your [Nightwatch configuration](https://nightwatchjs.org/guide/configuration/overview.html) and add the plugin to the list:
 
 ```js
 module.exports = {
-    plugins: ['@nightwatch/vrt']
+  plugins: ['@nightwatch/vrt']
     
-    // other nightwath settings...
+  // other nightwath settings...
 }
 ```
 
+## Usage
+
+Nightwatch VRT extends [Nightwatch.js](https://nightwatchjs.org/) with an assertion that captures a screenshot of a DOM element identified by a selector and compares it against a baseline. If the baseline screenshot does not exist, it will be created the first time you run the test and the assertion will pass.
 
 
-#### Nightwatch VRT custom settings
+### VRT custom settings
 
 The `@nightwatch/vrt` plugin comes by default with sensible configuration, but in some scenarios you may need to change some of the config options.
 
@@ -83,7 +85,7 @@ The screenshot path generator option accepts a function that generates a dynamic
 
 For example:
 
-```JavaScript
+```js
 function generateScreenshotFilePath(nightwatchClient, basePath, fileName) {
     const moduleName = nightwatchClient.currentTest.module,
         testName = nightwatchClient.currentTest.name
@@ -106,7 +108,7 @@ In order to use `nightwatch-vrt`, you only need to invoke the `screenshotIdentic
 | message          | Optional message for `nightwatch` to log upon completion                                       |
 
 
-```JavaScript
+```js
 describe('VRT demo test', function() {
     it('Test Google UI loads correctly', function(browser) {
         browser
@@ -125,7 +127,8 @@ The first time a test is run, a baseline screenshot will be created and stored o
 
 Baseline screenshots can be updated by running test with a CLI flag `--update-screenshots` or using global setting 'updateScreenshots' 
 
-
+## Licence
+MIT
 
 [build-badge]: https://github.com/nightwatchjs/nightwatch-vrt/actions/workflows/node.js.yml/badge.svg?branch=master
 [build]: https://github.com/nightwatchjs/nightwatch-vrt/actions/workflows/node.js.yml
