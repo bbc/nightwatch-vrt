@@ -10,7 +10,7 @@ Official Nightwatch plugin that adds visual regression testing support.
 ### Step 1 – install from NPM
 
 ```
-npm i @nightwatch/vrt
+npm i @nightwatch/vrt --save-dev
 ```
 
 ### Step 2 – add the plugin to the list
@@ -39,20 +39,20 @@ You can change the settings by adding `@nightwatch/vrt` entry to Nightwatch conf
 ```js
 //nightwatch.conf.js
 
-module.exports: {
+module.exports = {
     
     //... other config
 
    '@nightwatch/vrt': {
-    'latest_screenshots_path': 'vrt/latest',
-    'latest_suffix': '',
-    'baseline_screenshots_path': 'vrt/baseline',
-    'baseline_suffix': '',
-    'diff_screenshots_path': 'vrt/diff',
-    'diff_suffix': '',
-    'threshold': 0.01,
-    'prompt': false,
-    'updateScreenshots': false
+    latest_screenshots_path: 'vrt/latest',
+    latest_suffix: '',
+    baseline_screenshots_path: 'vrt/baseline',
+    baseline_suffix: '',
+    diff_screenshots_path: 'vrt/diff',
+    diff_suffix: '',
+    threshold: 0.01,
+    prompt: false,
+    updateScreenshots: false
   },
 }
 
