@@ -2,3 +2,7 @@ node_modules
 yarn.lock
 reports
 selenium-debug.log
+vrt
+tests_output
+vrt-report
+logs
