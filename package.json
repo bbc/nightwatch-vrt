@@ -33,7 +33,7 @@
         ]
     },
     "dependencies": {
-        "jimp": "^0.16.0",
+        "jimp": "^0.22.10",
         "lodash": "^4.17.4"
     },
     "devDependencies": {
