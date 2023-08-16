@@ -39,7 +39,7 @@
     "devDependencies": {
         "eslint": "^8.22.0",
         "eslint-config-crunch": "^1.8.0",
-        "eslint-plugin-react": "^7.30.0",
+        "eslint-plugin-react": "^7.33.2",
         "http-server": "^14.1.0",
         "jest": "^28.1.0",
         "nightwatch": "^2.3.0",
